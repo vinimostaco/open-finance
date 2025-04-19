@@ -20,3 +20,11 @@ func AddTransaction(title string, amount float64, txType string) (*model.Transac
 
 	return transaction, nil
 }
+
+func GetTransactions() ([]model.Transaction, error) {
+	var transactions []model.Transaction
+	if err := config.DB.Find(&transactions).Error; err != nil {
+		return nil, err
+	}	
+	return transactions, nil
+}

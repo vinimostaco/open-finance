@@ -39,3 +39,19 @@ func Add(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(returnedTransaction)
 }
+
+func Get(w http.ResponseWriter, r *http.Request){
+	if r.Method != http.MethodGet{
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+	defer r.Body.Close()
+	transactions, err := service.GetTransactions()
+	if err != nil {
+		http.Error(w, "Erro ao buscar transações", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(transactions)
+}
