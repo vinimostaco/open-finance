@@ -28,3 +28,11 @@ func GetTransactions() ([]model.Transaction, error) {
 	}	
 	return transactions, nil
 }
+
+func GetTransactionsByName(name string) ([]model.Transaction, error) {
+	var transactions []model.Transaction
+	if err := config.DB.Where("title = ?", name).Find(&transactions).Error; err != nil {
+		return nil, err
+	}
+	return transactions, nil
+}

@@ -21,3 +21,7 @@ type AddTransactionInput struct {
     Valor float64 `json:"valor"`
     Tipo  string  `json:"tipo"`
 }
+
+type GetTransactionByNameInput struct {
+	Nome string `json:"nome"`
+}

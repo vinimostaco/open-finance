@@ -19,3 +19,10 @@ func ValidateAddTransactionInput(input model.AddTransactionInput) error {
     }
     return nil
 }
+
+func ValidateGetTransactionByNameInput(input model.GetTransactionByNameInput) error {
+    if input.Nome == "" {
+        return errors.New("campo 'nome' é obrigatório")
+    }
+    return nil
+}

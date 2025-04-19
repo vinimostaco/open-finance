@@ -34,6 +34,6 @@ func Connect() {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	fmt.Println("Database connected!")
+	fmt.Println("✅ Database connected!")
 	DB = database
 }
