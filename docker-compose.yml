@@ -1,13 +1,25 @@
-version: "3.8"
-
 services:
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: open_finance_app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.docker
+    environment:
+      - DOCKER_ENV=true
+    depends_on:
+      - db
+
   db:
     image: postgres:15
     container_name: postgres_container
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
