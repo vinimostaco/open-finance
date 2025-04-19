@@ -2,32 +2,45 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
+
+	"github.com/vinimostaco/open-finance/src/service"
 )
 
 
+type AddTransactionInput struct {
+	Nome  string  `json:"nome"`
+	Valor float64 `json:"valor"`
+	Tipo   string  `json:"tipo"`
+}
 
 func AddValue(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPost {
         http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
         return
     }	
-	body,err := io.ReadAll(r.Body)
-	if err != nil{
-		http.Error(w, "Erro ao ler o corpo da requisição", http.StatusInternalServerError)
-		return
-	}
-	fmt.Printf("Corpo da requisição: %s\n", body)
 
-	var data map[string]interface{}
-	err = json.Unmarshal(body, &data)
-	if err != nil {
-		http.Error(w, "Erro ao fazer o unmarshal do JSON", http.StatusBadRequest)
+	var input AddTransactionInput
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		http.Error(w, "Input inválido", http.StatusBadRequest)
 		return
 	}
-	
+
+	if input.Tipo != "income" && input.Tipo != "expense" {
+		http.Error(w, "tipo deve ser: 'income' ou 'expense'", http.StatusBadRequest)
+		return
+	}
+
+	returnedTransaction, err := service.AddTransaction(input.Nome, input.Valor, input.Tipo)
+
+	if err != nil {
+		http.Error(w, "Erro ao adicionar transação", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(returnedTransaction)
 }
 
 func GetValue() {
