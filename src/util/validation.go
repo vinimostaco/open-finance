@@ -26,3 +26,13 @@ func ValidateGetTransactionByNameInput(input model.GetTransactionByNameInput) er
     }
     return nil
 }
+
+func ValidateGetTransactionByTypeInput(input model.GetTransactionByTypeInput) error {
+    if input.Tipo == "" {
+        return errors.New("campo 'tipo' é obrigatório")
+    }
+    if input.Tipo != "income" && input.Tipo != "expense" {
+        return errors.New("campo 'tipo' deve ser 'income' ou 'expense'")
+    }
+    return nil
+}

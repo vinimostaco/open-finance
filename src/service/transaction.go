@@ -36,3 +36,11 @@ func GetTransactionsByName(name string) ([]model.Transaction, error) {
 	}
 	return transactions, nil
 }
+
+func GetTransactionsByType(txType string) ([]model.Transaction, error) {
+	var transactions []model.Transaction
+	if err := config.DB.Where("type = ?", txType).Find(&transactions).Error; err != nil {
+		return nil, err
+	}
+	return transactions, nil
+}

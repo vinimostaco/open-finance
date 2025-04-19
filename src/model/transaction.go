@@ -25,3 +25,7 @@ type AddTransactionInput struct {
 type GetTransactionByNameInput struct {
 	Nome string `json:"nome"`
 }
+
+type GetTransactionByTypeInput struct {
+	Tipo string `json:"tipo"`
+}
