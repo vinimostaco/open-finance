@@ -6,6 +6,7 @@ import (
 
 	"github.com/vinimostaco/open-finance/src/model"
 	"github.com/vinimostaco/open-finance/src/service"
+	"github.com/vinimostaco/open-finance/src/util"
 )
 
 
@@ -23,11 +24,11 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if input.Tipo != "income" && input.Tipo != "expense" {
-		http.Error(w, "campo 'tipo' deve ser: 'income' ou 'expense'", http.StatusBadRequest)
+	if err := util.ValidateAddTransactionInput(input); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
-	}										
-
+	}	
+								
 	returnedTransaction, err := service.AddTransaction(input.Nome, input.Valor, input.Tipo)
 
 	if err != nil {
@@ -36,7 +37,7 @@ func Add(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(returnedTransaction)
 }
 
@@ -45,7 +46,6 @@ func Get(w http.ResponseWriter, r *http.Request){
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		return
 	}
-	defer r.Body.Close()
 	transactions, err := service.GetTransactions()
 	if err != nil {
 		http.Error(w, "Erro ao buscar transações", http.StatusInternalServerError)
