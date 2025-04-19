@@ -14,7 +14,7 @@ type AddTransactionInput struct {
 	Tipo   string  `json:"tipo"`
 }
 
-func AddValue(w http.ResponseWriter, r *http.Request) {
+func Add(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPost {
         http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
         return
@@ -29,7 +29,7 @@ func AddValue(w http.ResponseWriter, r *http.Request) {
 	if input.Tipo != "income" && input.Tipo != "expense" {
 		http.Error(w, "tipo deve ser: 'income' ou 'expense'", http.StatusBadRequest)
 		return
-	}
+	}										
 
 	returnedTransaction, err := service.AddTransaction(input.Nome, input.Valor, input.Tipo)
 

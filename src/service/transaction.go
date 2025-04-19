@@ -9,7 +9,7 @@ import (
 func AddTransaction(title string, amount float64, txType string) (*model.Transaction, error){
 	transaction := &model.Transaction{
 		ID: uuid.New(),
-		Title: title,
+		Title: title,	
 		Amount: amount,
 		Type: txType,
 	}
@@ -17,6 +17,6 @@ func AddTransaction(title string, amount float64, txType string) (*model.Transac
 	if err := config.DB.Create(transaction).Error; err != nil {
 		return nil, err
 	}
-	
+
 	return transaction, nil
 }

@@ -7,5 +7,5 @@ import (
 )
 
 func SetupRoutes() {
-	http.HandleFunc("/addValue", controller.AddValue)
+	http.HandleFunc("/addValue", controller.Add)
 }
