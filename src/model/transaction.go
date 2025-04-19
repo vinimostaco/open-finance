@@ -15,3 +15,9 @@ type Transaction struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }	
+
+type AddTransactionInput struct {
+    Nome  string  `json:"nome"`
+    Valor float64 `json:"valor"`
+    Tipo  string  `json:"tipo"`
+}
