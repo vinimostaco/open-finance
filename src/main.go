@@ -11,8 +11,7 @@ import (
 
 func main() {
 	config.Connect()
-	config.DB.AutoMigrate(&model.Transaction{})
-
+	config.DB.AutoMigrate(&model.Transaction{}, &model.User{})
 	routes.SetupRoutes()
 
 	fmt.Println("🚀 Starting server on :8080")

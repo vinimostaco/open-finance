@@ -11,4 +11,9 @@ func SetupRoutes() {
 	http.HandleFunc("/getTransactions", controller.Get)
 	http.HandleFunc("/getTransactionsByName", controller.GetByName)
 	http.HandleFunc("/getTransactionsByType", controller.GetByType)
+
+
+	//user routes
+	http.HandleFunc("/register", controller.Register)
+    http.HandleFunc("/login", controller.Login)
 }
