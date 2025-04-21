@@ -36,9 +36,13 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	response := map[string]interface{}{
+		"success": true,
+		"data": returnedTransaction,
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(returnedTransaction)
+	json.NewEncoder(w).Encode(response)
 }
 
 func Get(w http.ResponseWriter, r *http.Request){
@@ -95,9 +99,14 @@ func GetByName(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
+	response := map[string]interface{}{
+		"success": true,
+		"data": returnedTransactions,
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(returnedTransactions)
+	json.NewEncoder(w).Encode(response)
 }
 
 func GetByType(w http.ResponseWriter, r *http.Request){
@@ -125,7 +134,12 @@ func GetByType(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
+	response := map[string]interface{}{
+			"success": true,
+			"data": returnedTransactions,
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(returnedTransactions)
+	json.NewEncoder(w).Encode(response)
 }
