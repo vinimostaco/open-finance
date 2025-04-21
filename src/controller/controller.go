@@ -51,9 +51,23 @@ func Get(w http.ResponseWriter, r *http.Request){
 		http.Error(w, "Erro ao buscar transações", http.StatusInternalServerError)
 		return
 	}
+
+	tsx, err := util.CalculateTotalAmount(transactions)
+
+	if err != nil{
+		http.Error(w, "Erro ao calcular o total", http.StatusInternalServerError)
+		return
+	}
+
+	response := map[string]interface{}{
+		"success": true,
+		"data": transactions,
+		"totalAmount": tsx,
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(transactions)
+	json.NewEncoder(w).Encode(response)
 }
 
 func GetByName(w http.ResponseWriter, r *http.Request){

@@ -65,7 +65,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
     var input model.LoginUserInput
     if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
-        w.Header().Set("Content-Type", "application/json")
+        w.Header().Set("Content-Type", "application/json")  
         w.WriteHeader(http.StatusBadRequest)
         json.NewEncoder(w).Encode(map[string]interface{}{
             "success": false,
